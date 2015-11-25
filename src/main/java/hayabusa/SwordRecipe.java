@@ -1,12 +1,9 @@
-package main.java.hayabusa;
+package hayabusa;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-<<<<<<< HEAD
 import cpw.mods.fml.common.Mod;
-=======
->>>>>>> origin/master
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -15,8 +12,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
  */
 
 public class SwordRecipe extends Core {
-<<<<<<< HEAD
-	@Mod.EventHandler
+
 	public void preInit(FMLInitializationEvent event){
 	}
 	@Mod.EventHandler
@@ -31,24 +27,24 @@ public class SwordRecipe extends Core {
 	'G',Items.gold_ingot
 	);
 	}
-}
+
 	
 
-=======
+
 	public void init(FMLInitializationEvent event){
-	GameRegistry.addRecipe(new ItemStack(AddSword.ItemUrienSword,1));
+	GameRegistry.addRecipe(new ItemStack(AddSword.ItemUrienSword,1),
 	"DBD",
 	"III",
 	"GGG",
-	'D',Items.diamond
-	'B',Blocks.diamond_block
-	'I',Items.iron_ingot
+	'D',Items.diamond,
+	'B',Blocks.diamond_block,
+	'I',Items.iron_ingot,
 	'G',Items.gold_ingot
 	);
 	}
 	
 }
->>>>>>> origin/master
+
 
 /*ˆÈ‰º‚Ì‚â‚è•û‚Å‚ÌŽÀ‘••û–@‚í‚©‚ç‚¸.
  *Character=valueOf('DB'),"blockDiamond",

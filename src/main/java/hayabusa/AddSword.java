@@ -1,4 +1,4 @@
-package main.java.hayabusa;
+package hayabusa;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
