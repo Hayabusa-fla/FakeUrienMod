@@ -4,7 +4,8 @@ package hayabusa;
 import cpw.mods.fml.common.Mod;
 
 /*
- * Ó¯Ö‚Ì’è‹`‚È‚Ç
+ * The main class of UrienMod
+ * @auther Hayabusa
  */
 @Mod(modid = "Urienmod", name = "Urienmod")
 

@@ -26,19 +26,29 @@ public class ItemUrienSword extends ItemSword
 		setCreativeTab(CreativeTabs.tabCombat);
 		setUnlocalizedName("UrienSword");
 		setTextureName("Urienmod:uriensword");
-		
+	}
+		public static Item itemWeapon;{
 		this.setMaxStackSize(1);
 		this.setMaxDamage(1562);
 		this.damage = 0;
+		
 	}
 
-	public boolean onLeftClick()
-	if
-	{
-	}
-	}
-	//‚Â‚­‚è‚©‚¯
-	/*public static Item itemWeapon;
 	private float damage;
+	{
+		
+	}
+	
+	
+
+	public boolean onLeftClick()
+	{
+		if 
+	}
+	
+}
+	
+	//‚Â‚­‚è‚©‚¯
+	/*
 	
 	}*/
