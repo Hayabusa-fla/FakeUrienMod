@@ -1,12 +1,17 @@
 package hayabusa;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemSword;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.world.World;
+
 /*
- *���̒ǉ������̃N���X�BItemSword���p��
+ *剣の追加処理のクラス。ItemSwordを継承
  */
 
 public class ItemUrienSword extends ItemSword
@@ -21,7 +26,7 @@ public class ItemUrienSword extends ItemSword
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		/*���̒ǉ��A�_���[�W�Ƒϋv�l�̎w��*/
+		/*剣の追加、ダメージと耐久値の指定*/
 		ItemUrienSword = new ItemSword(Item.ToolMaterial.EMERALD);
 		setCreativeTab(CreativeTabs.tabCombat);
 		setUnlocalizedName("UrienSword");
@@ -38,17 +43,32 @@ public class ItemUrienSword extends ItemSword
 	{
 		
 	}
+/*ここらへんはもぢんぐwikiコピペ．*/
 	
-	
-
-	public boolean onLeftClick()
+	//右クリックをやめた時の動作．
+	public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer, int par4)
 	{
-		if 
+	//「クリエイティブモードか」どうかを判定させる．
+	//後半の( par1ItemStack) > 0;でメソッド未指定のエラーがあったため、Wikiのクリエ判定(1.6だけど)を元に修正_ぞんび
+	//必要な部分だったらｽﾐﾏｾﾝ
+	//もしかして:par5EntityPlayer.capabilities.isCreativeMode && itemstack.stackSize > 0  ??
+		boolean flag1 = ( par3EntityPlayer.capabilities).isCreativeMode;
 	}
-	
+	//
+	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    {
+    	par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
+ 
+        return par1ItemStack;
+    }
+	//右クリック時のアニメーション，バニラ弓のものを使用．
+	public EnumAction getItemUseAction(ItemStack par1ItemStack)
+    {
+        return EnumAction.bow;
+    }
 }
 	
-	//���肩��
+	//つくりかけ
 	/*
 	
 	}*/
