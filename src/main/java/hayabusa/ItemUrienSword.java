@@ -1,12 +1,8 @@
 package hayabusa;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.world.World;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 /*
@@ -42,26 +38,14 @@ public class ItemUrienSword extends ItemSword
 	{
 		
 	}
-	/*ここらへんはもぢんぐwikiコピペ．*/
 	
-	//右クリックをやめた時の動作．
-	public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer, int par4)
+	
+
+	public boolean onLeftClick()
 	{
-	//「クリエイティブモードか」どうかを判定させる．
-		boolean flag1 = ( par3EntityPlayer.capabilities).isCreativeMode ( par1ItemStack) > 0;
+		if 
 	}
-	//
-	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-    	par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
- 
-        return par1ItemStack;
-    }
-	//右クリック時のアニメーション，バニラ弓のものを使用．
-	public EnumAction getItemUseAction(ItemStack par1ItemStack)
-    {
-        return EnumAction.bow;
-    }
+	
 }
 	
 	//つくりかけ
