@@ -8,8 +8,6 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
 /*
@@ -59,37 +57,6 @@ public class ItemUrienSword extends ItemSword
 	//
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-		//ウィザーの効果をPotionで付与できるのではないかという希望_ぞんび
-		//以下Wikiより引用↓
-		//PotionのID
-				int potionID = Potion.wither.id;
-		 
-				//Potionの効果時間（【20tick ≒ 1秒】なので*20）
-				int duration = 20 * 20;
-		 
-				//PotionのLv
-				int amplifier = 2;
-		 
-				//PotionEffectの設定
-				PotionEffect Effect = new PotionEffect(potionID, duration, amplifier);
-		 
-				//PotionEffect(Effect)がEntityPlayerに付与されているかの判定
-				boolean isMoveSpeed = par3EntityPlayer.isPotionActive(Effect.getPotionID());
-		 
-				//PotionEffect(Effect)がEntityPlayerに付与されていない場合
-				if( !isMoveSpeed )
-				{
-					//Itemを振る動作
-					par3EntityPlayer.swingItem();
-		 
-					//ダメージ値を【1】増やす
-					//ここはお好みで_ぞんび
-					par1ItemStack.damageItem(1, par3EntityPlayer);
-		 
-					//PotionEffect(Effect)をEntityPlayerに付与
-					par3EntityPlayer.addPotionEffect(Effect);
-				}
-//↑ここまでコピペ
     	par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
  
         return par1ItemStack;
