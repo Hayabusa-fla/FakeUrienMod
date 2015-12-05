@@ -1,4 +1,4 @@
-package hayabusa;
+package me.peregirine.fakeurienmod;
 
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
