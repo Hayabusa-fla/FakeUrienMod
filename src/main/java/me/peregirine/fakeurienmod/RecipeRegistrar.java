@@ -1,14 +1,14 @@
 package me.peregirine.fakeurienmod;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 
 /*
- * Œ•‚ÌƒŒƒVƒsw’èƒNƒ‰ƒXBCoreƒNƒ‰ƒX‚ğŒp³B	c‚³‚¹‚é•K—v‚È‚¢H‚¤[‚ñ•ª‚©‚ç‚È‚¢B
+ * ï¿½ï¿½ï¿½Ìƒï¿½ï¿½Vï¿½sï¿½wï¿½ï¿½Nï¿½ï¿½ï¿½Xï¿½BCoreï¿½Nï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½pï¿½ï¿½ï¿½B	ï¿½cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Kï¿½vï¿½È‚ï¿½ï¿½Hï¿½ï¿½ï¿½[ï¿½ñ•ª‚ï¿½ï¿½ï¿½È‚ï¿½ï¿½B
  */
 
 public class RecipeRegistrar extends UrienModCore {
@@ -17,11 +17,11 @@ public class RecipeRegistrar extends UrienModCore {
 	}
 	@Mod.EventHandler
 	public void postinit(FMLInitializationEvent event){
-	GameRegistry.addRecipe(new ItemStack(ItemUrienSword.ItemUrienSword,1),
-		"IBI",
+	GameRegistry.addRecipe(new ItemStack(UrienModCore.uriensword,1),
+		"DBD",
 		"III",
 		"GGG",
-	'I',Items.diamond,
+	'D',Items.diamond,
 	'B',Blocks.diamond_block,
 	'I',Items.iron_ingot,
 	'G',Items.gold_ingot
@@ -30,7 +30,7 @@ public class RecipeRegistrar extends UrienModCore {
 
 }
 
-/*init‚Å‚Ì“o˜^
+/*initï¿½Å‚Ì“oï¿½^
 	public void init(FMLInitializationEvent event){
 	GameRegistry.addRecipe(new ItemStack(ItemUrienSword.ItemUrienSword,1),
 	"DBD",
@@ -46,7 +46,7 @@ public class RecipeRegistrar extends UrienModCore {
 
 
 
-/*ˆÈ‰º‚Ì‚â‚è•û‚Å‚ÌÀ‘••û–@‚í‚©‚ç‚¸.
+/*ï¿½È‰ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ï¿½Å‚Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½@ï¿½í‚©ï¿½ç‚¸.
  *Character=valueOf('DB'),"blockDiamond",
  *new Object[]{"D","DB","I","G"
  */
