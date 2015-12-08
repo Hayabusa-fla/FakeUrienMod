@@ -1,5 +1,7 @@
+package me.peregirine.fakeurienmod.client;
 
-
+import me.peregirine.fakeurienmod.common.CommonSideProxy;
+import me.peregirine.fakeurienmod.common.EntityBullet;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import cpw.mods.fml.client.FMLClientHandler;
