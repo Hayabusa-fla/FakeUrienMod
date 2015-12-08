@@ -1,5 +1,6 @@
-package me.peregirine.fakeurienmod;
+package me.peregirine.fakeurienmod.client;
 
+import me.peregirine.fakeurienmod.common.EntityBullet;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
@@ -8,7 +9,6 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import MCFireArmsMod.common.EntityBullet;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
