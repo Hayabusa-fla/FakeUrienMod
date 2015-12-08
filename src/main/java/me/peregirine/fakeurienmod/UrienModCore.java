@@ -44,6 +44,9 @@ public class UrienModCore {
 		.setTextureName("urienmod:uriensword");
 		GameRegistry.registerItem(uriensword, "UrienSword");
 	//public static UrienModCore instanse;
+	
+	EntityRegistry.registerModEntity(EntityBullet.class, "Arrow",
+				entityIdHead, this, 128, 5, true);
 	}
 	
 	//RecipeRegister.classでの登録がうまくいっていないようなのでCoreで処理する形に変更＿ぞんび
