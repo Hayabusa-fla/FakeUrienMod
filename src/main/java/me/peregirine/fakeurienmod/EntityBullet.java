@@ -1,3 +1,5 @@
+package me.peregirine.fakeurienmod;
+
 import java.util.List;
 
 import net.minecraft.block.Block;
