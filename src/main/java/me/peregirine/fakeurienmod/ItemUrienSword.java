@@ -80,7 +80,11 @@ public class ItemUrienSword extends ItemSword
             f = 1.0F;
         }
  //独自Entityの代わりにバニラのウィザー弾を呼び出している。末尾の数字はとりあえず0にしている＿ぞんび
- EntityWitherSkull bullet = new EntityWitherSkull(par2World,par3EntityPlayer, 0, 0, 0);
+ //EntityWitherSkull bullet = new EntityWitherSkull(par2World,par3EntityPlayer, 0, 0, 0);
+ //explosionArrowとfireArrowは気にしないでください めんどくさいから消してないだけ_でみっと
+ ExplosionArrow = false;
+ FireArrow = false;
+ EntityBullet bullet = new EntityBullet(par2World, par3EntityPlayer, 2F, ExplosionArrow, FireArrow);//発射処理
         //音を呼び出す部分。適切な音が無いのでコメントアウト 
         //par2World.playSoundAtEntity(par3EntityPlayer, "mob.villager.idle", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
  
