@@ -33,7 +33,7 @@ public class UrienModCore {
 	//れぎん氏のWikiを元に攻撃力を設定している。-5.0Fで0を下回っているためノックバックすらない。-4.0Fで通常攻撃力_ぞんび
 	public static final Item.ToolMaterial BLUE = EnumHelper.addToolMaterial("BLUE", 0, 150, -5.0F, -5.0F, 30  );
 	
-	@SidedProxy(clientSide = "MCFireArmsMod.client.ClientSideProxy", serverSide = "MCFireArmsMod.common.CommonSideProxy")
+	@SidedProxy(clientSide = "me.peregirine.fakeurienmod.client.ClientSideProxy", serverSide = "me.peregirine.fakeurienmod.common.CommonSideProxy")
 	public static CommonSideProxy proxy;
 	public static ClientSideProxy clientproxy;
 	
