@@ -32,6 +32,8 @@ public class UrienModCore {
 	public static Item uriensword;
 	//れぎん氏のWikiを元に攻撃力を設定している。-5.0Fで0を下回っているためノックバックすらない。-4.0Fで通常攻撃力_ぞんび
 	public static final Item.ToolMaterial BLUE = EnumHelper.addToolMaterial("BLUE", 0, 150, -5.0F, -5.0F, 30  );
+	
+	public static int entityIdHead = 170;
 
 	@Mod.EventHandler
 
