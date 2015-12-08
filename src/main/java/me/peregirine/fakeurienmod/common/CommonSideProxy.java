@@ -1,4 +1,4 @@
-package MCme.peregirine.fakeurienmod;
+package me.peregirine.fakeurienmod.common;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
