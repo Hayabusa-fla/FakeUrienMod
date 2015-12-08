@@ -1,19 +1,12 @@
 package me.peregirine.fakeurienmod;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-
 /*
- * ���̃��V�s�w��N���X�BCore�N���X���p���B	�c������K�v�Ȃ��H���[�񕪂���Ȃ��B
+ *Coreに移転したためほぼコメントアウト
  */
 
-public class RecipeRegistrar extends UrienModCore {
+public class RecipeRegistrar extends UrienModCore {}
 
-	public void preInit(FMLInitializationEvent event){
+	/*public void preInit(FMLInitializationEvent event){
 	}
 	@Mod.EventHandler
 	public void postinit(FMLInitializationEvent event){
@@ -28,7 +21,7 @@ public class RecipeRegistrar extends UrienModCore {
 	);
 	}
 
-}
+}*/
 
 /*init�ł̓o�^
 	public void init(FMLInitializationEvent event){
