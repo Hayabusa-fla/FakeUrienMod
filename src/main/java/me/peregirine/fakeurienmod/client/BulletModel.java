@@ -1,4 +1,4 @@
-package me.peregirine.fakeurienmod;
+package me.peregirine.fakeurienmod.client;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
