@@ -4,7 +4,7 @@ package me.peregirine.fakeurienmod;
  *Coreに移転したためほぼコメントアウト
  */
 
-public class RecipeRegistrar extends UrienModCore {}
+public class RecipeRegistrar{}
 
 	/*public void preInit(FMLInitializationEvent event){
 	}
