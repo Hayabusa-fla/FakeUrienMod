@@ -1,7 +1,12 @@
 package me.peregirine.fakeurienmod.common;
-
+/*勝手に内容の一部を解説しておくと、基本的にはWikiの1.6の発射体Entityの追加を
+ * 流用しているようです。村人とかに関するよくわからないコメントアウト部分はそのため。
+ * そのほかは近くのコメントを参照。_ぞんび
+*/
 import java.util.List;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -21,8 +26,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 /*
  * 発射されるエンティティのクラス。
@@ -507,9 +510,9 @@ public class EntityBullet extends Entity implements IProjectile{
                         movingobjectposition.entityHit.setFire(3);
                     }
 
-                    if(false){
+                    if(false){}
 
-                    }
+                    
                     /*if (isVillager)
                     {
                     	//対象が村人だった場合の処理

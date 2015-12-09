@@ -1,5 +1,7 @@
 package me.peregirine.fakeurienmod.common;
 
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
@@ -8,8 +10,6 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class ItemUrienSword extends ItemSword
 {
@@ -81,7 +81,8 @@ public class ItemUrienSword extends ItemSword
  //独自Entityの代わりにバニラのウィザー弾を呼び出している。末尾の数字はとりあえず0にしている＿ぞんび
  //EntityWitherSkull bullet = new EntityWitherSkull(par2World,par3EntityPlayer, 0, 0, 0);
 
-        boolean ExplosionArrow = false;
+        //ウィザー弾は爆発していたような気がするのでtrueに変更
+        boolean ExplosionArrow = true;
         boolean FireArrow = false;
         EntityBullet bullet = new EntityBullet(par2World, par3EntityPlayer, 2F, ExplosionArrow, FireArrow);//発射処理
         //音を呼び出す部分。適切な音が無いのでコメントアウト
