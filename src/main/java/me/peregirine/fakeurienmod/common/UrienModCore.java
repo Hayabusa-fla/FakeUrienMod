@@ -1,13 +1,6 @@
 package me.peregirine.fakeurienmod.common;
 
 
-import me.peregirine.fakeurienmod.client.ClientSideProxy;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.util.EnumHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -15,6 +8,15 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import me.peregirine.fakeurienmod.client.ClientSideProxy;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraftforge.common.util.EnumHelper;
 
 /*
  * The main class of UrienMod
@@ -33,6 +35,8 @@ public class UrienModCore {
 
 	//postInitでの謎のItemUrienSwordの処理を削除。＿ぞんび
 	public static Item uriensword;
+	public static Item hanyudasoba;
+	public static Item hanyumen;
 	//れぎん氏のWikiを元に攻撃力を設定している。-5.0Fで0を下回っているためノックバックすらない。-4.0Fで通常攻撃力_ぞんび
 	public static final Item.ToolMaterial BLUE = EnumHelper.addToolMaterial("BLUE", 0, 150, -5.0F, -5.0F, 30  );
 
@@ -57,6 +61,29 @@ public class UrienModCore {
 	EntityRegistry.registerModEntity(EntityBullet.class, "Arrow",
 				entityIdHead, this, 128, 5, true);
 	proxy.registerRenderers();
+	
+	//ここからは追加アイテム
+	/*
+	 * １つのポーション効果を持たせる場合
+	 * setPotionEffectは必ず最初にやること
+	 * setPotionEffectの引数は(ポーションID, 効果時間(秒), ポーションの効果レベル, この効果が発動する確率)
+	 */
+	
+	//処理に成功＿ぞんび
+	hanyudasoba = (new ItemFood(0, 0.0F, false))
+			.setPotionEffect(Potion.harm.id, 30, 10, 1.0F)
+			.setUnlocalizedName("hanyudaSoba")
+			.setTextureName("urienmod:hanyudasoba")
+			.setCreativeTab(CreativeTabs.tabFood);
+	//インベントリを空にする処理ができず挫折。後はお願いします_ぞんび
+	hanyumen = (new ItemFood(0, 0.0F, false))
+			.setPotionEffect(Potion.harm.id, 30, 10, 1.0F)
+			.setUnlocalizedName("hanyuMen")
+			.setTextureName("urienmod:hanyumen")
+			.setCreativeTab(CreativeTabs.tabFood);
+
+
+	GameRegistry.registerItem(hanyudasoba, "Hanyudasoba");
 	}
 
 	//RecipeRegister.classでの登録がうまくいっていないようなのでCoreで処理する形に変更＿ぞんび
@@ -74,7 +101,8 @@ public class UrienModCore {
 	//表示名の登録
 			LanguageRegistry.addName(uriensword, "Urien Sword");
 			LanguageRegistry.instance().addNameForObject(uriensword, "ja_JP", "宇理炎?");
-
+			
+		
 	}
 
 
