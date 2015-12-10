@@ -84,6 +84,7 @@ public class UrienModCore {
 
 
 	GameRegistry.registerItem(hanyudasoba, "Hanyudasoba");
+	GameRegistry.registerItem(hanyumen, "Hanyumen");
 	}
 
 	//RecipeRegister.classでの登録がうまくいっていないようなのでCoreで処理する形に変更＿ぞんび
@@ -101,6 +102,12 @@ public class UrienModCore {
 	//表示名の登録
 			LanguageRegistry.addName(uriensword, "Urien Sword");
 			LanguageRegistry.instance().addNameForObject(uriensword, "ja_JP", "宇理炎?");
+			
+			LanguageRegistry.addName(hanyumen, "Hanyu Men");
+			LanguageRegistry.instance().addNameForObject(hanyumen, "ja_JP", "はにゅうめん");
+			
+			LanguageRegistry.addName(hanyudasoba, "Hanyuda Soba");
+			LanguageRegistry.instance().addNameForObject(hanyudasoba, "ja_JP", "羽生蛇蕎麦");
 			
 		
 	}
