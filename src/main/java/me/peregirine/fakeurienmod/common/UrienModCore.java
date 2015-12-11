@@ -26,7 +26,8 @@ import net.minecraftforge.common.util.EnumHelper;
  * れぎん氏のWiki（Bow)を元にやや大きい変更を行いました＿ぞんび
  *
  */
-@Mod(modid = "Urienmod", name = "Urienmod")
+//modidにドメイン名に変更．
+@Mod(modid = "me.peregrine.Urienmod", name = "Urienmod")
 
 public class UrienModCore {
 	//まず不要な@Instanceをコメントアウト
@@ -104,7 +105,7 @@ public class UrienModCore {
 	);
 	//表示名の登録
 			LanguageRegistry.addName(uriensword, "Urien Sword");
-			LanguageRegistry.instance().addNameForObject(uriensword, "ja_JP", "宇理炎?");
+			LanguageRegistry.instance().addNameForObject(uriensword, "ja_JP", "宇理炎");
 			
 			LanguageRegistry.addName(hanyumen, "Hanyu Men");
 			LanguageRegistry.instance().addNameForObject(hanyumen, "ja_JP", "はにゅうめん");

@@ -14,5 +14,11 @@ public class TabCreateHandler extends CreativeTabs{
 		//試しにtabの画像にはurienswordを指定している。
 		return new ItemStack(UrienModCore.uriensword, 1, 0).getItem();
 	}
-
+	
+	@Override
+	public String getTranslatedTabLabel()
+	{
+		//クリエイティブタブの名前にUrienModを指定しました
+		return "UrienMod";
+	}
 }

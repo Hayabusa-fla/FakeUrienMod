@@ -14,19 +14,14 @@ import net.minecraft.world.World;
 public class ItemUrienSword extends ItemSword
 {
 	/*
-	 *剣の追加処理のクラス。ItemSwordを継承*/
+	 *剣の追加処理のクラス。ItemSwordを継承
+	 */
+	 
 	/*
 	 * ポーションによるウィザー効果処理がすっかり消えてたので足しました
 	 * 編集するときはちゃんとCloneしてもらえるとこちらとしては助かります。
 	 * Creativeの判定も同じ。せめてJava構文エラーは回避してくだされば＿ぞんび
 	 */
-	/*
-	public ItemUrienSword(ToolMaterial p_i45356_1_) {
-		super(p_i45356_1_);
-
-	}
-    */
-
 	//明示的コンストラクター
 	public ItemUrienSword(ToolMaterial p_i45356_1_) {
 	super(p_i45356_1_);
@@ -137,7 +132,7 @@ public class ItemUrienSword extends ItemSword
                      //Itemを振る動作
                     par3EntityPlayer.swingItem();
 
-                     //ダメージ値を【1】増やす
+                     //ダメージ値を1増やす
                     //ここはお好みで_ぞんび
                     par1ItemStack.damageItem(1, par3EntityPlayer);
 
@@ -157,8 +152,3 @@ public class ItemUrienSword extends ItemSword
         return EnumAction.bow;
     }
 }
-
-	//つくりかけ
-	/*
-
-	}*/
