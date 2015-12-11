@@ -19,6 +19,7 @@ public class ItemHanyumen extends ItemFood{
 	public ItemStack onEaten(ItemStack par1ItemStack, World par2World,
 			EntityPlayer par3EntityPlayer) {
 
+	//forが終わるまでがアイテム消去処理。お風呂に入ってたら思いつきました。　でみっと
 		for (int i = 0; i < 36; i++){
 			 ItemStack item = par3EntityPlayer.inventory.mainInventory[i];
 			 if(item != null)
