@@ -11,7 +11,7 @@ public class TabCreateHandler extends CreativeTabs{
 	}
 	@Override
 	public Item getTabIconItem() {
-		return new ItemStack(ProjectileTutorialCore.compoundbulletSource, 1, 0).getItem();
+		return new ItemStack(UrienModCore.uriensword, 1, 0).getItem();
 	}
 
 }
