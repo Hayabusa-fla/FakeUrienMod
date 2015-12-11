@@ -45,6 +45,8 @@ public class UrienModCore {
 	public static ClientSideProxy clientproxy;
 
 	public static int entityIdHead = 170;
+	
+	public static final CreativeTabs tabUrien = new TabCreateHandler("UrienMod");
 
 	@Mod.EventHandler
 
