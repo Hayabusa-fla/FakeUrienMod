@@ -45,13 +45,16 @@ public class UrienModCore {
 	public static ClientSideProxy clientproxy;
 
 	public static int entityIdHead = 170;
+	
+	//TabCreateHandlerにtab名を投げてクリエティブタブを作成
+	public static final CreativeTabs tabUrien = new TabCreateHandler("UrienMod");
 
 	@Mod.EventHandler
 
 	public void preInit(FMLPreInitializationEvent event){
 	 //これで新規クラスが読み込めるはず
 	uriensword =( new ItemUrienSword(BLUE))
-		.setCreativeTab(CreativeTabs.tabCombat)
+		.setCreativeTab(this.tabUrien)
 		.setUnlocalizedName("UrienSword")
 		//テクスチャへのパスは全て小文字である必要があります＿ぞんび
 		.setTextureName("urienmod:uriensword");
@@ -74,13 +77,13 @@ public class UrienModCore {
 			.setPotionEffect(Potion.harm.id, 30, 10, 1.0F)
 			.setUnlocalizedName("hanyudaSoba")
 			.setTextureName("urienmod:hanyudasoba")
-			.setCreativeTab(CreativeTabs.tabFood);
-	//インベントリを空にする処理ができず挫折。後はお願いします_ぞんび
-	hanyumen = (new ItemFood(0, 0.0F, false))
-			.setPotionEffect(Potion.harm.id, 30, 10, 1.0F)
+			.setCreativeTab(this.tabUrien);
+	//ItemHanyumenに投げる
+	hanyumen = (new ItemHanyumen(0, 0.0F, false))
+			/*.setPotionEffect(Potion.harm.id, 30, 10, 1.0F)
 			.setUnlocalizedName("hanyuMen")
 			.setTextureName("urienmod:hanyumen")
-			.setCreativeTab(CreativeTabs.tabFood);
+			.setCreativeTab(this.tabUrien)*/;
 
 
 	GameRegistry.registerItem(hanyudasoba, "Hanyudasoba");
