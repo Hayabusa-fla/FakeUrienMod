@@ -11,6 +11,7 @@ public class TabCreateHandler extends CreativeTabs{
 	}
 	@Override
 	public Item getTabIconItem() {
+		//試しにtabの画像にはurienswordを指定している。
 		return new ItemStack(UrienModCore.uriensword, 1, 0).getItem();
 	}
 
