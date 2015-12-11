@@ -78,12 +78,12 @@ public class UrienModCore {
 			.setUnlocalizedName("hanyudaSoba")
 			.setTextureName("urienmod:hanyudasoba")
 			.setCreativeTab(this.tabUrien);
-	//インベントリを空にする処理ができず挫折。後はお願いします_ぞんび
-	hanyumen = (new ItemFood(0, 0.0F, false))
-			.setPotionEffect(Potion.harm.id, 30, 10, 1.0F)
+	//ItemHanyumenに投げる
+	hanyumen = (new ItemHanyumen(0, 0.0F, false))
+			/*.setPotionEffect(Potion.harm.id, 30, 10, 1.0F)
 			.setUnlocalizedName("hanyuMen")
 			.setTextureName("urienmod:hanyumen")
-			.setCreativeTab(this.tabUrien);
+			.setCreativeTab(this.tabUrien)*/;
 
 
 	GameRegistry.registerItem(hanyudasoba, "Hanyudasoba");
