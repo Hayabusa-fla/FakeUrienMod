@@ -81,10 +81,10 @@ public class UrienModCore {
 			.setCreativeTab(this.tabUrien);
 	//ItemHanyumenに投げる
 	hanyumen = (new ItemHanyumen(0, 0.0F, false))
-			/*.setPotionEffect(Potion.harm.id, 30, 10, 1.0F)
+			//.setPotionEffect(Potion.harm.id, 30, 10, 1.0F)
 			.setUnlocalizedName("hanyuMen")
 			.setTextureName("urienmod:hanyumen")
-			.setCreativeTab(this.tabUrien)*/;
+			.setCreativeTab(this.tabUrien);  
 
 
 	GameRegistry.registerItem(hanyudasoba, "Hanyudasoba");
