@@ -11,10 +11,7 @@ public class ItemHanyumen extends ItemFood{
 
 	public ItemHanyumen(int p_i45339_1_, float p_i45339_2_, boolean p_i45339_3_) {
 		super(p_i45339_1_, p_i45339_2_, p_i45339_3_);
-		/*this.setPotionEffect(Potion.harm.id, 30, 10, 1.0F)
-		.setUnlocalizedName("hanyuMen")
-		.setTextureName("urienmod:hanyumen")
-		.setCreativeTab(UrienModCore.tabUrien);*/
+
 	}
 	@Override
 	public ItemStack onEaten(ItemStack par1ItemStack, World par2World,

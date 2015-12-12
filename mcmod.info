@@ -10,7 +10,7 @@
     "updateUrl": "https://github.com/Hayabusa58/FakeUrienMod",
     "authorList": ["Demitto","Dr.Zombie","Hayabusa"],
     "credits": "By ProjectUrienMod",
-    "logoFile": "",
+    "logoFile": "logo.png",
     "screenshots": [],
     "requiredMods": ["MinecraftForge"],
     "dependencies": [],
