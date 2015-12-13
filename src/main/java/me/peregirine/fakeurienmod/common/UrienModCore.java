@@ -103,6 +103,23 @@ public class UrienModCore {
 	'I',Items.iron_ingot,
 	'G',Items.gold_ingot
 	);
+	
+	//はにゅうめんとはにゅうだそばのレシピ処理。水入り瓶とポーションの指定がよくわからないのでコメントアウト
+	GameRegistry.addShapelessRecipe(new ItemStack(hanyudasoba),
+		       Items.wheat,
+		       Items.sugar,
+		       Blocks.brown_mushroom,
+		       new ItemStack(Blocks.tallgrass,0,1)//,
+		       //new ItemStack(Items.glass_bottle,0,1)
+		       );
+	GameRegistry.addShapelessRecipe(new ItemStack(hanyumen),
+		       Items.wheat,
+		       Items.sugar,
+		       Blocks.brown_mushroom,
+		       new ItemStack(Blocks.tallgrass,0,1)//,
+		       //new ItemStack(Items.potionitem,0,1)
+		       );
+		
 	//表示名の登録
 			LanguageRegistry.addName(uriensword, "Urien Sword");
 			LanguageRegistry.instance().addNameForObject(uriensword, "ja_JP", "宇理炎");
