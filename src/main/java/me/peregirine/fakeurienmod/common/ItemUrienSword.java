@@ -100,7 +100,46 @@ public class ItemUrienSword extends ItemSword
     {
         return 72000;
     }
+    
+ 	public void onUpdate(ItemStack p_77663_1_, World world, Entity entity, int p_77663_4_, boolean p_77663_5_){
+	   if(entity instanceof EntityPlayer){ //instanceofでentityがEntityPlayerかどうか確認
+		   EntityPlayer entP = (EntityPlayer)entity;
+		   ItemStack entPItem = entP.getHeldItem();
+		   if(entPItem != null){ //ぬるぽ回避
+			   if(entP.getHeldItem().getItem() == UrienModCore.uriensword){ //onUpdate自体はItemがインベントリにあるときにも呼ばれるので持っているアイテムの確認
+					
+				//このへんこのmodのコピペ
+				   int potionID = Potion.harm.id;
 
+				   //Potionの効果時間（【20tick ≒ 1秒】なので*20）
+				   int duration = 20 * 20;
+
+				   //PotionのLv
+				   int amplifier = 10;
+
+				   //PotionEffectの設定
+				   PotionEffect Effect = new PotionEffect(potionID, duration, amplifier);
+				   //entP.addPotionEffect(Effect);
+				  
+				   if(!world.isRemote) //サーバーでのみ判定を行う
+				   {
+				   		//Playerの当たり判定を取得、その大きさを変更してその当たり判定に当たっているentityをすべて取得
+						List list = world.getEntitiesWithinAABB(EntityLivingBase.class, entP.boundingBox.expand(10F,10F,10F));
+						//EntityPlayer entityP;
+						for(Object obj : list)
+						{
+							EntityLivingBase entityLB = ((EntityLivingBase)obj);
+							//entityが10m以内にあるかどうか
+							if(entity.getDistanceToEntity(entP) < 10)
+							{
+								entityLB.addPotionEffect(Effect);
+							}
+						}
+				   }
+			   }
+		   }
+	   }
+   }
 
 
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
