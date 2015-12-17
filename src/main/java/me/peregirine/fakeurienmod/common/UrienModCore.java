@@ -1,13 +1,6 @@
 package me.peregirine.fakeurienmod.common;
 
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import me.peregirine.fakeurienmod.client.ClientSideProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -17,6 +10,13 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.common.util.EnumHelper;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 /*
  * The main class of UrienMod
@@ -26,7 +26,7 @@ import net.minecraftforge.common.util.EnumHelper;
  * れぎん氏のWiki（Bow)を元にやや大きい変更を行いました＿ぞんび
  *
  */
-//modidにドメイン名に変更．
+//modidにドメイン名に変更． -はやぶさ
 @Mod(modid = "me.peregrine.Urienmod", name = "Urienmod")
 
 public class UrienModCore {
@@ -103,22 +103,30 @@ public class UrienModCore {
 	'I',Items.iron_ingot,
 	'G',Items.gold_ingot
 	);
-	
+	/*ポーションレシピの実装ですがとりあえず書いてみましたがテストプレイする時間がなかったのでpullRequestで投げます．
+	 *調整丸投げですいません   */	
 	//はにゅうめんとはにゅうだそばのレシピ処理。水入り瓶とポーションの指定がよくわからないのでコメントアウト
 	GameRegistry.addShapelessRecipe(new ItemStack(hanyudasoba),
-		       Items.wheat,
+		    // 小麦，砂糖，マッシュルーム，水入り瓶・・・なのですがとりあえず暗視のポーションにしてます．
+			   Items.wheat,
 		       Items.sugar,
 		       Blocks.brown_mushroom,
-		       new ItemStack(Blocks.tallgrass,0,1)//,
+		       Potion.blindness
+		       //new Potion(Potion.blindness)//,
 		       //new ItemStack(Items.glass_bottle,0,1)
 		       );
 	GameRegistry.addShapelessRecipe(new ItemStack(hanyumen),
-		       Items.wheat,
+		    //小麦，砂糖，マッシュルーム，力のポーションではにゅうめん一つ．
+			new Object[]{
+			   Items.wheat,
 		       Items.sugar,
 		       Blocks.brown_mushroom,
-		       new ItemStack(Blocks.tallgrass,0,1)//,
-		       //new ItemStack(Items.potionitem,0,1)
-		       );
+		       Potion.damageBoost
+	});
+		       //new ItemStack(Items.potionitem,1,1)
+		       //new ItemStack(Blocks.tallgrass,0,1)
+		       
+		       ;
 		
 	//表示名の登録
 			LanguageRegistry.addName(uriensword, "Urien Sword");
