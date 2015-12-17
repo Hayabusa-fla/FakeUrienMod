@@ -104,22 +104,34 @@ public class UrienModCore {
 	'G',Items.gold_ingot
 	);
 	
-	//はにゅうめんとはにゅうだそばのレシピ処理。水入り瓶とポーションの指定がよくわからないのでコメントアウト
+	//はにゅうめんとはにゅうだそばのレシピ処理。水入り瓶はPotionItem
 	GameRegistry.addShapelessRecipe(new ItemStack(hanyudasoba),
 		       Items.wheat,
 		       Items.sugar,
 		       Blocks.brown_mushroom,
-		       new ItemStack(Blocks.tallgrass,0,1)//,
-		       //new ItemStack(Items.glass_bottle,0,1)
+		       new ItemStack(Blocks.tallgrass,0,1),
+		       new ItemStack(Items.potionitem)
+
 		       );
+	//ダメージ9にすることで力のポーションを指定している
+	/*しかしここで問題があります。
+	 * ここで確かに力のポーションを指定できているのですが、そのポーションは外見こそバニラと同じですが
+	 * クリエイティブタブにあるものや醸造でできるものとはどこかが違うようです。
+	 * 実際、1,9のpotionitemを生成する別のレシピを作成し、それで生成された力のポーションで
+	 * このレシピを使うと、はにゅうめんができます
+	 * しかし、クリエイティブや醸造のものは、見た目はまったく同じですができませんでした
+	 * 原因不明なので解決策募集中です＿ぞんび
+	 */
 	GameRegistry.addShapelessRecipe(new ItemStack(hanyumen),
 		       Items.wheat,
 		       Items.sugar,
 		       Blocks.brown_mushroom,
-		       new ItemStack(Blocks.tallgrass,0,1)//,
-		       //new ItemStack(Items.potionitem,0,1)
+		       new ItemStack(Blocks.tallgrass,0,1),
+		       new ItemStack(Items.potionitem,1,9)
 		       );
-		
+
+	
+	
 	//表示名の登録
 			LanguageRegistry.addName(uriensword, "Urien Sword");
 			LanguageRegistry.instance().addNameForObject(uriensword, "ja_JP", "宇理炎");
