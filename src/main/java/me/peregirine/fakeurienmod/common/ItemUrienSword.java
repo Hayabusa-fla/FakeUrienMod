@@ -113,13 +113,15 @@ public class ItemUrienSword extends ItemSword
 			   if(entP.getHeldItem().getItem() == UrienModCore.uriensword){ //onUpdate自体はItemがインベントリにあるときにも呼ばれるので持っているアイテムの確認
 					
 				//このへんこのmodのコピペ
-				   int potionID = Potion.harm.id;
+				   //harmになってたので依頼にあわせてWitherに＿ぞんび
+				   int potionID = Potion.wither.id;
 
 				   //Potionの効果時間（【20tick ≒ 1秒】なので*20）
 				   int duration = 20 * 20;
 
 				   //PotionのLv
-				   int amplifier = 10;
+				   //これも依頼内容どおりに＿ぞんび
+				   int amplifier = 5;
 
 				   //PotionEffectの設定
 				   PotionEffect Effect = new PotionEffect(potionID, duration, amplifier);
