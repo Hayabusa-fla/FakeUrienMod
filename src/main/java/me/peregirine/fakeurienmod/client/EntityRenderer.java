@@ -12,6 +12,10 @@ import org.lwjgl.opengl.GL12;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+/*
+ * エンティティの描画に関するクラスです．
+ * 
+ */
 @SideOnly(Side.CLIENT)
 public class EntityRenderer extends Render
 {

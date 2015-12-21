@@ -20,104 +20,94 @@ import net.minecraftforge.common.util.EnumHelper;
 
 /*
  * The main class of UrienMod
- * @author Hayabusa
- */
-/*
- * れぎん氏のWiki（Bow)を元にやや大きい変更を行いました＿ぞんび
+ * @author Demitto,Dr.Zombie,Hayabusa
  *
+ * Last change date 2015/12/21
+ * コメント文が多く見づらいかと思いますが，これは初心者の方に少しでも分かりやすくすることを心がけているためですので，ご容赦ください．
  */
-//modidにドメイン名に変更．
+
+//modidの指定．＠Modアノテーションをつけることでmodとして認識される．
 @Mod(modid = "me.peregrine.Urienmod", name = "Urienmod")
 
 public class UrienModCore {
-	//まず不要な@Instanceをコメントアウト
-	//@Instance("Urienmod")
-	//protected static UrienModCore instance;
-
-	//postInitでの謎のItemUrienSwordの処理を削除。＿ぞんび
+	//追加するアイテムのインスタンスを保持する変数を宣言．
 	public static Item uriensword;
 	public static Item hanyudasoba;
 	public static Item hanyumen;
-	//れぎん氏のWikiを元に攻撃力を設定している。-5.0Fで0を下回っているためノックバックすらない。-4.0Fで通常攻撃力_ぞんび
+	
 	public static final Item.ToolMaterial BLUE = EnumHelper.addToolMaterial("BLUE", 0, 150, -5.0F, -5.0F, 30  );
-
-	@SidedProxy(clientSide = "me.peregirine.fakeurienmod.client.ClientSideProxy", serverSide = "me.peregirine.fakeurienmod.common.CommonSideProxy")
+	
+	//クライアント，サーバー間で異なる処理を行わせるためのプロキシーの設定．
+	@SidedProxy(clientSide = "me.peregirine.fakeurienmod.client.ClientSideProxy", 
+				serverSide = "me.peregirine.fakeurienmod.common.CommonSideProxy")
 	public static CommonSideProxy proxy;
 	public static ClientSideProxy clientproxy;
-
+	
+	//エンティティIDの上限を設定．
 	public static int entityIdHead = 170;
 	
-	//TabCreateHandlerにtab名を投げてクリエティブタブを作成
-	public static final CreativeTabs tabUrien = new TabCreateHandler("UrienMod");
-
+	//新規クリエイティブタブの処理．変数にTabCreateHandlerのインスタンスの生成，代入
+	//本当は定数なので全て大文字が良いのですが．
+	public final CreativeTabs tabUrien = new TabCreateHandler("UrienMod");
+	
 	@Mod.EventHandler
-
 	public void preInit(FMLPreInitializationEvent event){
-	 //これで新規クラスが読み込めるはず
+	//宇理炎ソードの設定．ItemUrienSwordのインスタンスの生成．
 	uriensword =( new ItemUrienSword(BLUE))
+	//クリエイティブタブに追加，英語名の設定，テクスチャの指定，GameRegistryに登録 のそれぞれのメソッドの呼び出し．
 		.setCreativeTab(this.tabUrien)
 		.setUnlocalizedName("UrienSword")
-		//テクスチャへのパスは全て小文字である必要があります＿ぞんび
 		.setTextureName("urienmod:uriensword");
 		GameRegistry.registerItem(uriensword, "UrienSword");
-	//public static UrienModCore instanse;
 
-	EntityRegistry.registerModEntity(EntityBullet.class, "Arrow",
-				entityIdHead, this, 128, 5, true);
-	proxy.registerRenderers();
+		//宇理炎ソードの右クリックで発射されるエンティティを登録．
+		EntityRegistry.registerModEntity(EntityBullet.class, "Arrow",entityIdHead, this, 128, 5, true);
+		proxy.registerRenderers();
+		
+	//ここから食べ物二種の登録処理．
 	
-	//ここからは追加アイテム
-	/*
-	 * １つのポーション効果を持たせる場合
-	 * setPotionEffectは必ず最初にやること
-	 * setPotionEffectの引数は(ポーションID, 効果時間(秒), ポーションの効果レベル, この効果が発動する確率)
-	 */
-	
-	//処理に成功＿ぞんび
+	//はにゅうだそばの登録．
 	hanyudasoba = (new ItemFood(0, 0.0F, false))
+			//食べた際の即死効果はsetPotionEffectを呼び出して設定しています．引数にダメージポーションを指定．
 			.setPotionEffect(Potion.harm.id, 30, 10, 1.0F)
 			.setUnlocalizedName("hanyudaSoba")
 			.setTextureName("urienmod:hanyudasoba")
 			.setCreativeTab(this.tabUrien);
-	//ItemHanyumenに投げる
+			
+	//はにゅうめんの登録．即死＆全ロス効果をつけるためはにゅうだそばとは違い，独自に定義したインスタンスを生成しています．
 	hanyumen = (new ItemHanyumen(0, 0.0F, false))
-			//.setPotionEffect(Potion.harm.id, 30, 10, 1.0F)
 			.setUnlocalizedName("hanyuMen")
 			.setTextureName("urienmod:hanyumen")
 			.setCreativeTab(this.tabUrien);  
 
-
+	//GameRegistryへの登録．
 	GameRegistry.registerItem(hanyudasoba, "Hanyudasoba");
 	GameRegistry.registerItem(hanyumen, "Hanyumen");
 	}
 
-	//RecipeRegister.classでの登録がうまくいっていないようなのでCoreで処理する形に変更＿ぞんび
+
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event){
+	//ここからはそれぞれのレシピの登録をしています．
 	GameRegistry.addRecipe(new ItemStack(UrienModCore.uriensword,1),
 		"DBD",
 		"III",
 		"GGG",
-	'D',Items.diamond,
-	'B',Blocks.diamond_block,
-	'I',Items.iron_ingot,
-	'G',Items.gold_ingot
-	);
+		'D',Items.diamond,
+		'B',Blocks.diamond_block,
+		'I',Items.iron_ingot,
+		'G',Items.gold_ingot
+			);
 	
-	//はにゅうめんとはにゅうだそばのレシピ処理。水入り瓶はPotionItem
 	GameRegistry.addShapelessRecipe(new ItemStack(hanyudasoba),
 		       Items.wheat,
 		       Items.sugar,
 		       Blocks.brown_mushroom,
+		       //ここでItemStackを利用しているのは，”水入り瓶”はポーションのメタデータ指定しないものとして扱われているためです．
 		       new ItemStack(Blocks.tallgrass,0,1),
 		       new ItemStack(Items.potionitem)
-
-		       );
-	//ダメージ8201にすることで力のポーションを指定している
-	//ポーションの種類自体は9で指定できるが、バニラでは耐久力などを掛けたりした?
-	//8201が使われている（GamePedia参照）
-
-	 
+			);
+	
 	GameRegistry.addShapelessRecipe(new ItemStack(hanyumen),
 		       Items.wheat,
 		       Items.sugar,
@@ -126,16 +116,15 @@ public class UrienModCore {
 		       new ItemStack(Items.potionitem,1,8201)
 		       );
 
-
-	//表示名の登録
+	//アイテムの表示名を登録しています．
 			LanguageRegistry.addName(uriensword, "Urien Sword");
-			LanguageRegistry.instance().addNameForObject(uriensword, "ja_JP", "宇理炎");
+			LanguageRegistry.instance().addNameForObject(uriensword, "ja_JP", "宇理炎ソード");
 			
 			LanguageRegistry.addName(hanyumen, "Hanyu Men");
 			LanguageRegistry.instance().addNameForObject(hanyumen, "ja_JP", "はにゅうめん");
 			
 			LanguageRegistry.addName(hanyudasoba, "Hanyuda Soba");
-			LanguageRegistry.instance().addNameForObject(hanyudasoba, "ja_JP", "羽生蛇蕎麦");
+			LanguageRegistry.instance().addNameForObject(hanyudasoba, "ja_JP", "はにゅうだそば");
 			
 		
 	}

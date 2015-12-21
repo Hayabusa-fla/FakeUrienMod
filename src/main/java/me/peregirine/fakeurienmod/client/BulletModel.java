@@ -6,6 +6,11 @@ import net.minecraft.entity.Entity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+/*
+ * エンティティのモデルの設定クラスです．
+ * 
+ */
+
 @SideOnly(Side.CLIENT)
 public class BulletModel extends ModelBase
 {

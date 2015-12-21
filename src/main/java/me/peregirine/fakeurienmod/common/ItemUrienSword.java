@@ -1,7 +1,6 @@
 package me.peregirine.fakeurienmod.common;
 
 import java.util.List;
-
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.entity.Entity;
@@ -15,78 +14,57 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+/*
+ * 宇理炎ソードの実際の挙動を設定するクラスです．
+ */
 public class ItemUrienSword extends ItemSword
 {
-	/*
-	 *剣の追加処理のクラス。ItemSwordを継承
-	 */
-	 
-	/*
-	 * ポーションによるウィザー効果処理がすっかり消えてたので足しました
-	 * 編集するときはちゃんとCloneしてもらえるとこちらとしては助かります。
-	 * Creativeの判定も同じ。せめてJava構文エラーは回避してくだされば＿ぞんび
-	 */
-	//明示的コンストラクター
 	public ItemUrienSword(ToolMaterial p_i45356_1_) {
 	super(p_i45356_1_);
-
 }
 
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent event)
-	{
-
-
+	public void preInit(FMLPreInitializationEvent event){
 	}
+		//武器としての設定．
 		public static Item itemWeapon;{
 		this.setMaxStackSize(1);
 		this.setMaxDamage(1562);
 		this.damage = 0;
-
-	}
+		}
 
 	private float damage;
 	{
-
 	}
-	/*ここらへんはもぢんぐwikiコピペ．*/
-
-	//右クリックをやめた時の動作．
+	//ウィザーヘッドを流用したエンティティを発射する処理です．
+	//右クリックをやめた時に呼ばれるメソッド．
 	public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer, int par4)
 	{
-    	//以下はWikiの1.6の発射体Entity追加を参考にしました_ぞんび
-		//par4は右クリックの押下時間。
+   //右クリックの押下上限時間の設定．
         int j = this.getMaxItemUseDuration(par1ItemStack) - par4;
-	//「クリエイティブモードか」どうかを判定させる．
-		final boolean   isCreativeMode;
+        final boolean   isCreativeMode;
 		boolean flag1 =  (par3EntityPlayer.capabilities).isCreativeMode;
-
-		   //右クリック押下時間をもとに計算。20で割り（単位を秒に変換）、なにやら二次関数的な計算式に入れている。
-        //ここではバニラ弓のまま使っているが、独自の計算式でも良いと思います。
+		
+		//ややこしいので変数の動きをしっかり追ってください．
+        //取得した右クリック押下時間を元にため時間を設定．20で割っているのは単位を秒に変換するため．
         float f = (float)j / 20.0F;
         f = (f * f + f * 2.0F) / 3.0F;
 
-        //タメ時間が一定以下の場合、何も起こさず処理から抜ける。
+        //ため時間が一定以下だった場合処理から抜ける(発射しない)．
         if ((double)f < 0.0D)
         {
             return;
         }
-
-        //fの上限値。
+        //ため時間の上限値を設定．
         if (f > 1.0F)
         {
             f = 1.0F;
         }
- //独自Entityの代わりにバニラのウィザー弾を呼び出している。末尾の数字はとりあえず0にしている＿ぞんび
- //EntityWitherSkull bullet = new EntityWitherSkull(par2World,par3EntityPlayer, 0, 0, 0);
-
-        //ウィザー弾は爆発していたような気がするのでtrueに変更
+        //爆発するか，燃えた状態で飛ぶか設定する変数．
         boolean ExplosionArrow = true;
         boolean FireArrow = false;
-        EntityBullet bullet = new EntityBullet(par2World, par3EntityPlayer, 2F, ExplosionArrow, FireArrow);//発射処理
-        //音を呼び出す部分。適切な音が無いのでコメントアウト
-        //par2World.playSoundAtEntity(par3EntityPlayer, "mob.villager.idle", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-
+        EntityBullet bullet = new EntityBullet(par2World, par3EntityPlayer, 2F, ExplosionArrow, FireArrow);//���ˏ���
+        
         if (!par2World.isRemote)
         {
             par2World.spawnEntityInWorld(bullet);
@@ -97,9 +75,7 @@ public class ItemUrienSword extends ItemSword
     {
     	return par1ItemStack;
     }
-	 /*
-     * 右クリックでの使用（タメ）時間の上限。
-     */
+	//右クリック押下時間の上限設定．
    public int getMaxItemUseDuration(ItemStack par1ItemStack)
     {
         return 72000;
@@ -109,29 +85,22 @@ public class ItemUrienSword extends ItemSword
 	   if(entity instanceof EntityPlayer){ //instanceofでentityがEntityPlayerかどうか確認
 		   EntityPlayer entP = (EntityPlayer)entity;
 		   ItemStack entPItem = entP.getHeldItem();
-		   if(entPItem != null){ //ぬるぽ回避
+		   if(entPItem != null){ //�ʂ�ۉ��
 			   if(entP.getHeldItem().getItem() == UrienModCore.uriensword){ //onUpdate自体はItemがインベントリにあるときにも呼ばれるので持っているアイテムの確認
 					
-				//このへんこのmodのコピペ
-				   //harmになってたので依頼にあわせてWitherに＿ぞんび
+				   //エンティティに当たった際のウィザー効果の設定．
 				   int potionID = Potion.wither.id;
-
-				   //Potionの効果時間（【20tick ≒ 1秒】なので*20）
+				   //効果時間．
 				   int duration = 20 * 20;
-
-				   //PotionのLv
-				   //これも依頼内容どおりに＿ぞんび
+				   //効果レベル．
 				   int amplifier = 5;
-
-				   //PotionEffectの設定
+				   //PotionEffectの設定．
 				   PotionEffect Effect = new PotionEffect(potionID, duration, amplifier);
-				   //entP.addPotionEffect(Effect);
 				  
-				   if(!world.isRemote) //サーバーでのみ判定を行う
+				   if(!world.isRemote) //マルチプレイサーバーでのみの処理，if文で場合分け．
 				   {
-				   		//Playerの当たり判定を取得、その大きさを変更してその当たり判定に当たっているentityをすべて取得
+				   		//Playerの当たり判定を取得，その大きさを変更してその当たり判定に当たっているentityをすべて取得
 						List list = world.getEntitiesWithinAABB(EntityLivingBase.class, entP.boundingBox.expand(10F,10F,10F));
-						//EntityPlayer entityP;
 						for(Object obj : list)
 						{
 							EntityLivingBase entityLB = ((EntityLivingBase)obj);
@@ -147,49 +116,31 @@ public class ItemUrienSword extends ItemSword
 	   }
    }
 
-
+ 	//以下メソッドは右クリックした際に呼ばれます．
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-
-
-
-
-		//ウィザーの効果をPotionで付与できるのではないかという希望_ぞんび
-		//以下Wikiより引用↓
-		//PotionのID
 				int potionID = Potion.wither.id;
-
-				//Potionの効果時間（【20tick ≒ 1秒】なので*20）
+				//Potionの効果時間．
 				int duration = 20 * 20;
-
-				//PotionのLv
+				//PotionのLv．
 				int amplifier = 2;
-
-				//PotionEffectの設定
+				//PotionEffectの設定．
 				PotionEffect Effect = new PotionEffect(potionID, duration, amplifier);
-
-                //PotionEffect(Effect)がEntityPlayerに付与されているかの判定
+				//PotionEffect(Effect)がEntityPlayerに付与されているかの判定
                 boolean isMoveSpeed = par3EntityPlayer.isPotionActive(Effect.getPotionID());
-
+                
                 //PotionEffect(Effect)がEntityPlayerに付与されていない場合
                 if( !isMoveSpeed )
                 {
-                     //Itemを振る動作
-                    par3EntityPlayer.swingItem();
-
-                     //ダメージ値を1増やす
-                    //ここはお好みで_ぞんび
+                     //振る動作．
+                    par3EntityPlayer.swingItem(); 
                     par1ItemStack.damageItem(1, par3EntityPlayer);
-
                     //PotionEffect(Effect)をEntityPlayerに付与
                     par3EntityPlayer.addPotionEffect(Effect);
                       }
-//↑ここまでコピペ
+                
 		par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
-
-        return par1ItemStack;
-
-
+        	return par1ItemStack;
     }
 	//右クリック時のアニメーション，バニラ弓のものを使用．
 	public EnumAction getItemUseAction(ItemStack par1ItemStack)

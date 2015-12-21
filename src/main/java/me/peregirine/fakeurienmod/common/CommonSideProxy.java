@@ -3,6 +3,11 @@ package me.peregirine.fakeurienmod.common;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
+/*
+ * プロキシーの設定クラスです． 
+ * 
+ */
+
 public class CommonSideProxy {
 
 	public void registerRenderers()
@@ -14,7 +19,9 @@ public class CommonSideProxy {
 
 		return null;
 	}
+	
 	public void registerClientInfo(){}
+	
 	public boolean isThePlayer(EntityPlayer player)
 	{
 		return false;

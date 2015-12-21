@@ -7,6 +7,11 @@ import net.minecraft.world.World;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
+/*
+ * クライアント側のプロキシーの設定に関するクラスです．
+ * 
+ */
+
 public class ClientSideProxy extends CommonSideProxy{
 
 

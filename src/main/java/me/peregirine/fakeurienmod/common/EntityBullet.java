@@ -1,10 +1,6 @@
 package me.peregirine.fakeurienmod.common;
-/*勝手に内容の一部を解説しておくと、基本的にはWikiの1.6の発射体Entityの追加を
- * 流用しているようです。村人とかに関するよくわからないコメントアウト部分はそのため。
- * そのほかは近くのコメントを参照。_ぞんび
-*/
-import java.util.List;
 
+import java.util.List;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -28,11 +24,11 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 /*
- * 発射されるエンティティのクラス。
- * */
+ * エンティティの実際の挙動を設定するクラスです．
+ */
 public class EntityBullet extends Entity implements IProjectile{
 
-    /* 地中判定に使うもの */
+	//地中判定に使うもの 
     protected int xTile = -1;
     protected int yTile = -1;
     protected int zTile = -1;
@@ -46,40 +42,23 @@ public class EntityBullet extends Entity implements IProjectile{
 
     public static boolean hitCrossHair;
 
-    /* この弾を撃ったエンティティ */
+    //この弾を撃ったエンティティ
     public Entity shootingEntity;
 
-    /* 地中・空中にいる時間 */
+    //地中・空中にいる時間
     protected int ticksInGround;
     protected int ticksInAir;
 
-    /* ダメージの大きさ */
+    //ダメージの大きさ
     protected double damage = 3.0D;
 
-    /* ノックバックの大きさ */
+    //ノックバックの大きさ
     protected int knockbackStrength = 1;
 
     int tickcnt;
 
     protected boolean isExplosion = false;
     protected boolean isFire = false;
-
-    /*public EntityBullet(World par1World)
-    {
-        super(par1World);
-        this.renderDistanceWeight = 10.0D;
-        this.setSize(0.2F, 0.2F);
-        this.damage = 2.5D;
-    }*/
-
-    /** 発射する弾を生成・初期パラメータの定義をする。
-     * @param par1World :このワールド
-     * @param par2EntityLivingBase :弾源となるエンティティ。このModの場合、弾を撃ったプレイヤーがここに入る
-     * @param speed :弾の速度計算に使われる値
-     * @param speed2 :弾の速度計算に使われる値2
-     * @param adjustX :プレイヤーから見て水平方向に、発射する弾をずらす(複数発射するときなどに使用する)
-     * @param adjustZ :プレイヤーから見て前後方向に弾をずらす
-     * @param adjustY :プレイヤーから見て上下方向に弾をずらす*/
 
     public EntityBullet(World p_i1753_1_)
     {
@@ -153,63 +132,16 @@ public class EntityBullet extends Entity implements IProjectile{
         this.motionY = (double)(-MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI));
         this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, p_i1756_3_ * 1.5F, 1.0F);
     }
-    /*public EntityBullet(World par1World, EntityLivingBase par2EntityLivingBase, float speed, float speed2,
-         float adjustX, float adjustZ, float adjustY)
-    {
-    	super(par1World);
-        this.renderDistanceWeight = 10.0D;
-        this.shootingEntity = par2EntityLivingBase;
-        this.yOffset = 0.0F;
-        this.setSize(0.3F, 0.3F);
-
-        this.posY = par2EntityLivingBase.posY + (double)par2EntityLivingBase.getEyeHeight() - 0.10000000149011612D;
-        double d0 = par2EntityLivingBase.posX - par2EntityLivingBase.posX;
-        double d1 = par2EntityLivingBase.boundingBox.minY + (double)(par2EntityLivingBase.height / 3.0F) - this.posY;
-        double d2 = par2EntityLivingBase.posZ - par2EntityLivingBase.posZ;
-        double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
-
-        if (d3 >= 1.0E-7D)
-        {
-            float f2 = (float)(Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
-            float f3 = (float)(-(Math.atan2(d1, d3) * 180.0D / Math.PI));
-            double d4 = d0 / d3;
-            double d5 = d2 / d3;
-            this.setLocationAndAngles(par2EntityLivingBase.posX + d4, this.posY, par2EntityLivingBase.posZ + d5, f2, f3);
-            this.yOffset = 0.0F;
-            float f4 = (float)d3 * 0.2F;
-        }
-
-        //初期状態での向きの決定
-        //this.setLocationAndAngles(par2EntityLivingBase.posX, par2EntityLivingBase.posY +(double)par2EntityLivingBase.getEyeHeight(), par2EntityLivingBase.posZ,par2EntityLivingBase.rotationYaw, par2EntityLivingBase.rotationPitch);
-        //this.setLocationAndAngles(par2EntityLivingBase.posX, par2EntityLivingBase.posY + (double)par2EntityLivingBase.getEyeHeight(), par2EntityLivingBase.posZ, par2EntityLivingBase.rotationYaw, par2EntityLivingBase.rotationPitch);
-        //this.setLocationAndAngles(par2EntityLivingBase.posX + d4, this.posY, par2EntityLivingBase.posZ + d5, f2, f3);
-
-        //位置の調整
-        this.posX += -(double)(MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * (1.0F + adjustZ))
-        		- (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * adjustX);
-        this.posY += 0.05000000149011612D + adjustY;
-        this.posZ += (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * (1.0F + adjustZ))
-        		- (double)(MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * adjustX);
-        this.setPosition(this.posX, this.posY, this.posZ);
-
-        //初速度
-        this.motionX = (double)(-MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) *
-                           MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI));
-        this.motionZ = (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) *
-                           MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI));
-        this.motionY = (double)(-MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI));
-        this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, speed * 1.5F, speed2);
-    }*/
-
-    /*dataWatcherを利用したサーバ・クライアント間の同期処理だと思う*/
+   
+    //dataWatcherを利用したサーバ・クライアント間の同期処理だと思う
     protected void entityInit()
     {
     	this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
     }
 
     /*
-     * IProjectileで実装が必要なメソッド。
-     * ディスペンサーによる発射メソッドなどで使用されている。
+     * IProjectileで実装が必要なメソッド．
+     * ディスペンサーによる発射メソッドなどで使用されている
      */
     public void setThrowableHeading(double par1, double par3, double par5, float par7, float par8)
     {
@@ -233,10 +165,6 @@ public class EntityBullet extends Entity implements IProjectile{
     }
 
     @SideOnly(Side.CLIENT)
-    /*
-     * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
-     * posY, posZ, yaw, pitch
-     */
     public void setPositionAndRotation2(double par1, double par3, double par5, float par7, float par8, int par9)
     {
         this.setPosition(par1, par3, par5);
@@ -267,15 +195,15 @@ public class EntityBullet extends Entity implements IProjectile{
     }
 
     /*
-     * Tick毎に呼ばれる更新処理。
-     * 速度の更新、衝突判定などをここで行う。
+     * Tick毎に呼ばれる更新処理．
+     * 速度の更新、衝突判定などをここで行う．
      */
     public void onUpdate()
     {
         super.onUpdate();
 
-        //直前のパラメータと新パラメータを一致させているところ。
-        //また、速度に応じてエンティティの向きを調整し、常に進行方向に前面が向くようにしている。
+        //直前のパラメータと新パラメータを一致させているところ．
+        //また，速度に応じてエンティティの向きを調整し、常に進行方向に前面が向くようにしている．
         if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F)
         {
             float f = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
@@ -283,25 +211,6 @@ public class EntityBullet extends Entity implements IProjectile{
             this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(this.motionY, (double)f) * 180.0D / Math.PI);
         }
 
-
-
-
-        /*
-        //激突したブロックを確認している
-        int i = this.worldObj.getBlockId(this.xTile, this.yTile, this.zTile);
-
-        //空気じゃないブロックに当たった&ブロック貫通エンティティでない時
-        if (i > 0 && !this.isPenetrateBlock())
-        {
-            Block.blocksList[i].setBlockBoundsBasedOnState(this.worldObj, this.xTile, this.yTile, this.zTile);
-            AxisAlignedBB axisalignedbb = Block.blocksList[i].getCollisionBoundingBoxFromPool(this.worldObj, this.xTile, this.yTile, this.zTile);
-
-            //当たり判定に接触しているかどうか
-            if (axisalignedbb != null && axisalignedbb.isVecInside(this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX, this.posY, this.posZ)))
-            {
-                this.inGround = true;
-            }
-        }*/
         Block block = this.worldObj.getBlock(this.xTile, this.yTile, this.zTile);
 
         if (block.getMaterial() != Material.air)
@@ -319,32 +228,19 @@ public class EntityBullet extends Entity implements IProjectile{
         {
             --this.arrowShake;
         }
-
-        /*tickcnt++;
-        if(tickcnt >= 40){
-        	this.setDead();
-        	tickcnt = 0;
-            if(ItemBulletSource.ExplosionArrow){
-            	if (!this.worldObj.isRemote)
-            	{
-            		this.worldObj.createExplosion(this, this.xTile, this.yTile, this.zTile, 4.0F, false); //爆発
-            	}
-            }
-        }*/
-
-        //空気じゃないブロックに当たった
+        
         if (this.inGround)
         {
         	Block j = this.worldObj.getBlock(this.xTile, this.yTile, this.zTile);
             int k = this.worldObj.getBlockMetadata(this.xTile, this.yTile, this.zTile);
-
-            /* 前のTickに確認した埋まりブロックのIDとメタを照合している。違ったら埋まり状態を解除、一致したら埋まり状態を継続。
-            /* 埋まり状態2tick継続でこのエンティティを消す
+            /*
+             * 前のTickに確認した埋まりブロックのIDとメタを照合している。違ったら埋まり状態を解除、一致したら埋まり状態を継続。
+             * 埋まり状態2tick継続でこのエンティティを消す
              */
             if (j == g && k == this.inData)
             {
             	++this.ticksInGround;
-            	//ブロック貫通の場合、20tick（1秒間）はブロック中にあっても消えないようになる。
+            	//�u���b�N�ђʂ̏ꍇ�A20tick�i1�b�ԁj�̓u���b�N���ɂ����Ă������Ȃ��悤�ɂȂ�B
             	int limit = this.isPenetrateBlock() ? 20 : 2;
             	//int limit = 0;
 
@@ -354,7 +250,7 @@ public class EntityBullet extends Entity implements IProjectile{
                     if(this.isExplosion){
                     	if (!this.worldObj.isRemote)
                     	{
-                    		this.worldObj.createExplosion(this, this.xTile, this.yTile, this.zTile, 2.0F, true); //爆発
+                    		this.worldObj.createExplosion(this, this.xTile, this.yTile, this.zTile, 2.0F, true); //����
                     	}
                     }
                 }
@@ -369,7 +265,7 @@ public class EntityBullet extends Entity implements IProjectile{
                 this.ticksInAir = 0;
             }
         }
-        else//埋まってない時。速度の更新。
+        else//埋まってない時．速度の更新．
         {
             ++this.ticksInAir;
             //ブロックとの衝突判定
@@ -380,7 +276,7 @@ public class EntityBullet extends Entity implements IProjectile{
             vec3 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
 
-            //ブロック貫通がONの場合、ブロック衝突判定をスキップ
+          //ブロック貫通がONの場合，ブロック衝突判定をスキップ．
             if (this.isPenetrateBlock())
             {
             	movingobjectposition = null;
@@ -392,7 +288,7 @@ public class EntityBullet extends Entity implements IProjectile{
             	vec3 = Vec3.createVectorHelper(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
             }
 
-            //Entityとの衝突判定。
+            //Entityとの衝突判定
             Entity entity = null;
             List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this,
                             this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
@@ -401,12 +297,12 @@ public class EntityBullet extends Entity implements IProjectile{
             float f1;
             boolean isVillager = false;
 
-            //1ブロック分の範囲内にいるエンティティ全てに対して繰り返す
+            //
             for (l = 0; l < list.size(); ++l)
             {
                 Entity entity1 = (Entity)list.get(l);
 
-                //発射物自身or発射後5tick以外だとすりぬける
+                //���˕����gor���ˌ�5tick�ȊO���Ƃ���ʂ���
                 if (entity1.canBeCollidedWith() && (entity1 != this.shootingEntity || this.ticksInAir >= 5))
                 {
                     f1 = 0.3F;
@@ -426,43 +322,43 @@ public class EntityBullet extends Entity implements IProjectile{
                 }
             }
 
-            //エンティティに当たった
+            //�G���e�B�e�B�ɓ�������
             if (entity != null)
             {
                 movingobjectposition = new MovingObjectPosition(entity);
 
             }
 
-            /* 当たったエンティティそれそれについての判定部分。
-             * ここでmovingobjectposition = nullにすることで特定の種類のエンティティに当たらないようにできる。*/
+            /* ���������G���e�B�e�B���ꂻ��ɂ��Ă̔��蕔���B
+             * ������movingobjectposition = null�ɂ��邱�Ƃœ���̎�ނ̃G���e�B�e�B�ɓ�����Ȃ��悤�ɂł���B*/
             if (movingobjectposition != null && movingobjectposition.entityHit != null)
             {
                 if (movingobjectposition.entityHit instanceof EntityPlayer)
                 {
-                	//プレイヤーに当たった時
+                	//�v���C���[�ɓ���������
                 	EntityPlayer entityplayer = (EntityPlayer)movingobjectposition.entityHit;
 
                     if (entityplayer.capabilities.disableDamage || this.shootingEntity instanceof EntityPlayer &&
                            !((EntityPlayer)this.shootingEntity).canAttackPlayer(entityplayer))
                     {
-                    	//PvPが許可されていないと当たらない
+                    	//PvP��������Ă��Ȃ��Ɠ�����Ȃ�
                         movingobjectposition = null;
                     }
                     else if (entityplayer == this.shootingEntity)
                     {
-                    	//対象が撃った本人の場合も当たらない
+                    	//�Ώۂ��������{�l�̏ꍇ��������Ȃ�
                     	movingobjectposition = null;
                     }
                 }
                 else if (movingobjectposition.entityHit instanceof EntityTameable ||
                              movingobjectposition.entityHit instanceof EntityHorse)
                 {
-                	//事故防止の為、EntityTameable（犬や猫などのペット）、馬にも当たらないようにする
+                	//���̖h�~�ׁ̈AEntityTameable�i����L�Ȃǂ̃y�b�g�j�A�n�ɂ�������Ȃ��悤�ɂ���
                 	//movingobjectposition = null;
                 }
                 else if (movingobjectposition.entityHit instanceof EntityVillager)
                 {
-                	//村人に当たった場合にフラグがtrueになる
+                	//���l�ɓ��������ꍇ�Ƀt���O��true�ɂȂ�
                 	isVillager = true;
                 }
 
@@ -479,31 +375,31 @@ public class EntityBullet extends Entity implements IProjectile{
             float f2;
             float f3;
 
-            //当たったあとの処理
+            //�����������Ƃ̏���
             if (movingobjectposition != null)
             {
-            	//エンティティに当たった
+            	//�G���e�B�e�B�ɓ�������
                 if (movingobjectposition.entityHit != null)
                 {
-                	//衝突時の弾の速度を計算
+                	//�Փˎ��̒e�̑��x���v�Z
                     f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY +
                             this.motionZ * this.motionZ);
-                    //速度が大きいほど、ダメージも大きくなる
+                    //���x���傫���قǁA�_���[�W���傫���Ȃ�
                     int i1 = MathHelper.ceiling_double_int((double)f2 * this.damage);
-                    //0~2程度の乱数値を上乗せ
+                    //0~2���x�̗����l����悹
                     i1 += this.rand.nextInt(3);
 
                     DamageSource damagesource = null;
 
 
-                    //別メソッドでダメージソースを確認
+                    //�ʃ��\�b�h�Ń_���[�W�\�[�X���m�F
                     damagesource = this.thisDamageSource(this.shootingEntity);
 
                     if(this.isFire){
                     	this.setFire(5000);
                     }
 
-                    //バニラ矢と同様、このエンティティが燃えているなら対象に着火することも出来る
+                    //�o�j����Ɠ��l�A���̃G���e�B�e�B���R���Ă���Ȃ�Ώۂɒ��΂��邱�Ƃ��o����
                     if (this.isBurning() /*&& !(movingobjectposition.entityHit instanceof EntityEnderman)*/)
                     {
                     	//this.worldObj.spawnParticle("largesmoke", this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
@@ -512,42 +408,18 @@ public class EntityBullet extends Entity implements IProjectile{
 
                     if(false){}
 
-                    
-                    /*if (isVillager)
-                    {
-                    	//対象が村人だった場合の処理
-                    	EntityVillager villager = (EntityVillager) movingobjectposition.entityHit;
-                    	//ダメージに相当する量の回復効果をもたらす
-                    	villager.heal((float)i1);
-                    	//ただしノックバックは有る
-                    	if (this.knockbackStrength > 0)
-                        {
-                            f3 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
-
-                            if (f3 > 0.0F)
-                            {
-                                movingobjectposition.entityHit.addVelocity(this.motionX *
-                                    (double)this.knockbackStrength * 0.6000000238418579D / (double)f3, 0.1D, this.motionZ *
-                                    (double)this.knockbackStrength * 0.6000000238418579D / (double)f3);
-                            }
-                        }
-                        else
-                        {
-                        	movingobjectposition.entityHit.hurtResistantTime = 0;
-                        }
-                    }*/
                     else
                     {
-                    	//村人以外なら、ダメージを与える処理を呼ぶ
+                    	//���l�ȊO�Ȃ�A�_���[�W��^���鏈�����Ă�
                     	if (movingobjectposition.entityHit.attackEntityFrom(damagesource, (float)i1))
                         {
-                    		//ダメージを与えることに成功したら以下の処理を行う
+                    		//�_���[�W��^���邱�Ƃɐ���������ȉ��̏������s��
                             if (movingobjectposition.entityHit instanceof EntityLivingBase)
                             {
 
                                 EntityLivingBase entitylivingbase = (EntityLivingBase)movingobjectposition.entityHit;
 
-                                //ノックバック
+                                //�m�b�N�o�b�N
                                 if (this.knockbackStrength > 0)
                                 {
                                     f3 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
@@ -564,13 +436,7 @@ public class EntityBullet extends Entity implements IProjectile{
                                 	movingobjectposition.entityHit.hurtResistantTime = 0;
                                 }
 
-                                //Thornのエンチャント効果で反撃を受ける
-                                /*if (this.shootingEntity != null)
-                                {
-                                    EnchantmentThorns.func_92096_a(this.shootingEntity, entitylivingbase, this.rand);
-                                }*/
-
-                                //マルチプレイ時に、両者がプレイヤーだった時のパケット送信処理
+                                
                                 if (this.shootingEntity != null && movingobjectposition.entityHit != this.shootingEntity &&
                                         movingobjectposition.entityHit instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP)
                                 {
@@ -578,27 +444,27 @@ public class EntityBullet extends Entity implements IProjectile{
                                 }
                             }
 
-                            //ここでヒット時の効果音がなる
+                            //�����Ńq�b�g���̌�ʉ����Ȃ�
                             this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
                             if(this.isExplosion){
                             	if (!this.worldObj.isRemote)
                             	{
-                            		this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 3.0F, false); //爆発
+                            		this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 3.0F, false); //����
                             	}
                             }
 
-                            //当たったあと、弾を消去する。エンティティ貫通がONの弾種はそのまま残す。
+                            //�����������ƁA�e����������B�G���e�B�e�B�ђʂ�ON�̒e��͂��̂܂܎c���B
                             if (!(movingobjectposition.entityHit instanceof EntityEnderman) && !this.isPenetrateEntity())
                             {
                                 this.setDead();
-                                //this.worldObj.createExplosion(shootingEntity, this.xTile, this.yTile, this.zTile, 4.0F, true); //爆発
+                                //this.worldObj.createExplosion(shootingEntity, this.xTile, this.yTile, this.zTile, 4.0F, true); //����
                             }
                         }
                     }
 
                 }
-                else if (!this.isPenetrateBlock())  //エンティティには当たってない。ブロックに当たった。
+                else if (!this.isPenetrateBlock())  //�G���e�B�e�B�ɂ͓������ĂȂ��B�u���b�N�ɓ��������B
                 {
                     this.xTile = movingobjectposition.blockX;
                     this.yTile = movingobjectposition.blockY;
@@ -626,7 +492,7 @@ public class EntityBullet extends Entity implements IProjectile{
                 }
             }
 
-            //改めてポジションに速度を加算。向きも更新。
+            //��߂ă|�W�V�����ɑ��x�����Z�B����X�V�B
             this.posX += this.motionX;
             this.posY += this.motionY;
             this.posZ += this.motionZ;
@@ -661,17 +527,17 @@ public class EntityBullet extends Entity implements IProjectile{
             this.rotationPitch = this.prevRotationPitch + (this.rotationPitch - this.prevRotationPitch) * 0.2F;
             this.rotationYaw = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * 0.2F;
 
-            //徐々に減速する
+            //���X�Ɍ�������
             float f4 = 0.99F;
 
-            //重力落下
-            //落下速度は別メソッドで設定している。デフォルトでは0.0F。
+            //�d�͗���
+            //�������x�͕ʃ��\�b�h�Őݒ肵�Ă���B�f�t�H���g�ł�0.0F�B
             f1 = this.fallSpeed();
 
-            //水中に有る
+            //�����ɗL��
             if (this.isInWater())
             {
-            	//泡パーティクルが出る
+            	//�A�p�[�e�B�N�����o��
                 for (int j1 = 0; j1 < 4; ++j1)
                 {
                     f3 = 0.25F;
@@ -679,7 +545,7 @@ public class EntityBullet extends Entity implements IProjectile{
                          (double)f3, this.posZ - this.motionZ * (double)f3, this.motionX, this.motionY, this.motionZ);
                 }
 
-                //減速も大きくなる
+                //�������傫���Ȃ�
                 f4 = 0.8F;
             }
 
@@ -688,7 +554,7 @@ public class EntityBullet extends Entity implements IProjectile{
             this.motionZ *= (double)f4;
             this.motionY -= (double)f1;
 
-            //一定以上遅くなったら消える
+            //���ȏ�x���Ȃ����������
             if (this.worldObj.isRemote && this.motionX * this.motionX + this.motionZ * this.motionZ < 0.001D)
             {
             	this.setDead();
@@ -736,7 +602,7 @@ public class EntityBullet extends Entity implements IProjectile{
     }
 
     /*
-     * プレイヤーと衝突した時のメソッド。今回は何もしない
+     * �v���C���[�ƏՓ˂������̃��\�b�h�B����͉������Ȃ�
      */
     public void onCollideWithPlayer(EntityPlayer par1EntityPlayer)
     {
@@ -744,8 +610,8 @@ public class EntityBullet extends Entity implements IProjectile{
     }
 
     /*
-     * ブロックに対し、上を歩いたかという判定の対象になるか、というEntityクラスのメソッド。
-     * 耕地を荒らしたりするのに使う。
+     * �u���b�N�ɑ΂��A�����������Ƃ�������̑ΏۂɂȂ邩�A�Ƃ���Entity�N���X�̃��\�b�h�B
+     * �k�n���r�炵���肷��̂Ɏg���B
      */
     protected boolean canTriggerWalking()
     {
@@ -782,30 +648,30 @@ public class EntityBullet extends Entity implements IProjectile{
     	return isFire;
     }
 
-    /** 以下、当MOD用のパラメータ定義部分*/
+    /** �ȉ��A��MOD�p�̃p�����[�^��`����*/
 
-    /* 落下速度 */
+    /* �������x */
     public float fallSpeed()
     {
     	return 0.02F;
     }
 
-    /* ダメージソースのタイプ */
+    /* �_���[�W�\�[�X�̃^�C�v */
     public DamageSource thisDamageSource(Entity entity)
     {
-        //発射元のEntityがnullだった場合の対策を含む。
+        //���ˌ���Entity��null�������ꍇ�̑΍���܂ށB
     	//return entity != null ? EntityDamageSource.causeIndirectMagicDamage(entity, this) : DamageSource.magic;
     	//return DamageSource.fall;
     	return DamageSource.generic;
     }
 
-    /* ブロック貫通 */
+    /* �u���b�N�ђ� */
     public boolean isPenetrateBlock()
     {
     	return false;
     }
 
-    /* エンティティ貫通 */
+    /* �G���e�B�e�B�ђ� */
     public boolean isPenetrateEntity()
     {
     	return false;
